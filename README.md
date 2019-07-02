@@ -6,9 +6,7 @@
 
 ```json
 {
-  ...
-  "gorm:migrate": true,
-  ...
+  "gorm:migrate": true
 }
 ```
 
