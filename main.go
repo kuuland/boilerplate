@@ -29,5 +29,5 @@ func main() {
 			routes.BookPublic(),
 		},
 	})
-	r.Run(":8088")
+	r.Run()
 }
