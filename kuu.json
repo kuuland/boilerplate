@@ -1,0 +1,40 @@
+{
+  "name": "Boilerplate",
+  "prefix": "/api",
+  "cors": {
+    "AllowAllOrigins": true,
+    "AllowMethods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "HEAD"
+    ],
+    "AllowHeaders": [
+      "Origin",
+      "Content-Length",
+      "Content-Type",
+      "api_key",
+      "Authorization",
+      "Token",
+      "Code",
+      ""
+    ],
+    "AllowCredentials": false,
+    "MaxAge": 43200000000000
+  },
+  "gzip": true,
+  "gorm:migrate": false,
+  "db": {
+    "dialect": "postgres",
+    "args": "host=127.0.0.1 port=5432 user=root dbname=kuu password=kuu sslmode=disable timezone='Asia/Shanghai'"
+  },
+  "redis": {
+    "addr": "127.0.0.1:6379"
+  },
+  "statics": {
+    "/assets": "assets/",
+    "/docs": "docs/"
+  }
+}

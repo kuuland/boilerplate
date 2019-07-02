@@ -1,0 +1,60 @@
+kind: pipeline
+name: default
+
+clone:
+  depth: 1
+
+steps:
+  - name: build
+    image: golang
+    environment:
+      GOOS: linux
+      GOARCH: amd64
+      GO111MODULE: on
+      CGO_ENABLED: 0
+    commands:
+      - go build -v -o app
+
+  - name: docker
+    image: plugins/docker
+    environment:
+      DOCKER_REGISTRY:
+        from_secret: docker_registry
+      DOCKER_NS:
+        from_secret: docker_ns
+    settings:
+      registry:
+        from_secret: docker_registry
+      mirror:
+        from_secret: docker_mirror
+      username:
+        from_secret: docker_user
+      password:
+        from_secret: docker_pass
+      repo: ${DOCKER_REGISTRY}/${DOCKER_NS}/${DRONE_REPO_NAME}
+      tags: ${DRONE_COMMIT_BRANCH}-${DRONE_BUILD_NUMBER}
+
+  - name: deploy
+    image: ystyle/drone-plugin-rancher2
+    environment:
+      DOCKER_REGISTRY:
+        from_secret: docker_registry
+      DOCKER_NS:
+        from_secret: docker_ns
+    settings:
+      access_key:
+        from_secret: rancher_key
+      secret_key:
+        from_secret: rancher_secret
+      api:
+        from_secret: rancher_api
+      data: |
+        [
+          {
+            "name": "${DRONE_REPO_NAME}",
+            "image": "${DOCKER_REGISTRY}/${DOCKER_NS}/${DRONE_REPO_NAME}:${DRONE_COMMIT_BRANCH}-${DRONE_BUILD_NUMBER}"
+          }
+        ]
+
+node:
+  agent: hk
