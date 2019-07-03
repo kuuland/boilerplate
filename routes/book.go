@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"github.com/gin-gonic/gin/binding"
 	"github.com/kuuland/boilerplate/models"
 	"github.com/kuuland/kuu"
 	"strconv"
@@ -16,7 +17,7 @@ func BookPrivate() kuu.RouteInfo {
 				Subject string `json:"Name" binding:"required"`
 				InStock bool
 			}
-			if err := c.ShouldBindJSON(&body); err != nil {
+			if err := c.ShouldBindBodyWith(&body, binding.JSON); err != nil {
 				c.STDErr("解析请求体失败", err)
 				return
 			}
