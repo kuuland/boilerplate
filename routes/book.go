@@ -17,12 +17,12 @@ func BookPrivate() kuu.RouteInfo {
 				InStock bool
 			}
 			if err := c.ShouldBindJSON(&body); err != nil {
-				c.STDErrHold("解析请求体失败").Data(err).Render()
+				c.STDErr("解析请求体失败", err)
 				return
 			}
 			var books []models.Book
 			if err := c.DB().Find(&books).Error; err != nil {
-				c.STDErr("查询失败")
+				c.STDErr("查询失败", err)
 				return
 			}
 			c.STD(books)
@@ -39,7 +39,7 @@ func BookPublic() kuu.RouteInfo {
 			var books []models.Book
 			class, _ := strconv.Atoi(c.DefaultQuery("c", "100"))
 			if err := c.DB().Where(models.Book{InStock: true, Class: class}).Find(&books).Error; err != nil {
-				c.STDErr("查询失败")
+				c.STDErr("查询失败", err)
 				return
 			}
 			c.STD(books)
