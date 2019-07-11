@@ -94,6 +94,7 @@ github.com/kr/text v0.1.0 h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
 github.com/kuuland/kuu v0.0.0-20190711083731-cc9259ef1926 h1:7cRoD0QhlBiJpUNMXGqSqczk5+M9JfX+cwYIlcRE9eg=
 github.com/kuuland/kuu v0.0.0-20190711083731-cc9259ef1926/go.mod h1:CQtXdLZzs2KSJ7H9YMn8lsO6DSS5E2AkQwDVGvta4Hg=
+github.com/kuuland/kuu v0.0.0-20190711105944-1387d17b1dfd/go.mod h1:CQtXdLZzs2KSJ7H9YMn8lsO6DSS5E2AkQwDVGvta4Hg=
 github.com/lib/pq v1.1.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
 github.com/lib/pq v1.1.1 h1:sJZmqHoEaY7f+NPP8pgLB/WxulyR3fewgCM2qaSlBb4=
 github.com/lib/pq v1.1.1/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=

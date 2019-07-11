@@ -6,6 +6,6 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.4.0
 	github.com/jinzhu/gorm v1.9.10
-	github.com/kuuland/kuu v0.0.0-20190711083731-cc9259ef1926
+	github.com/kuuland/kuu v0.0.0-20190711105944-1387d17b1dfd
 	github.com/satori/go.uuid v1.2.0
 )
