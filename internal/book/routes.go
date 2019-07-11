@@ -2,13 +2,12 @@ package book
 
 import (
 	"github.com/gin-gonic/gin/binding"
-	"github.com/kuuland/boilerplate/models"
 	"github.com/kuuland/kuu"
 	"strconv"
 )
 
-// BookPrivate
-func BookPrivate() kuu.RouteInfo {
+// Private
+func Private() kuu.RouteInfo {
 	return kuu.RouteInfo{
 		Path:   "/book/private",
 		Method: "POST",
@@ -21,7 +20,7 @@ func BookPrivate() kuu.RouteInfo {
 				c.STDErr("解析请求体失败", err)
 				return
 			}
-			var books []models.Book
+			var books []Book
 			if err := c.DB().Find(&books).Error; err != nil {
 				c.STDErr("查询失败", err)
 				return
@@ -31,15 +30,15 @@ func BookPrivate() kuu.RouteInfo {
 	}
 }
 
-// BookPublic
-func BookPublic() kuu.RouteInfo {
+// Public
+func Public() kuu.RouteInfo {
 	return kuu.RouteInfo{
 		Path:   "/book/public",
 		Method: "GET",
 		HandlerFunc: func(c *kuu.Context) {
-			var books []models.Book
+			var books []Book
 			class, _ := strconv.Atoi(c.DefaultQuery("c", "100"))
-			if err := c.DB().Where(models.Book{InStock: true, Class: class}).Find(&books).Error; err != nil {
+			if err := c.DB().Where(Book{InStock: true, Class: class}).Find(&books).Error; err != nil {
 				c.STDErr("查询失败", err)
 				return
 			}

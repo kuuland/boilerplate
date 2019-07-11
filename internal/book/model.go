@@ -7,17 +7,17 @@ import (
 
 // 枚举：图书分类
 const (
-	_                   = iota
-	BookClassPhilosophy = 100 * iota // 100的倍数
-	BookClassSocial
-	BookClassNatural
+	_               = iota
+	ClassPhilosophy = 100 * iota // 100的倍数
+	ClassSocial
+	ClassNatural
 )
 
 func init() {
 	kuu.Enum("BookClass", "图书分类").
-		Add(BookClassPhilosophy, "哲学").
-		Add(BookClassSocial, "社会科学").
-		Add(BookClassNatural, "自然科学")
+		Add(ClassPhilosophy, "哲学").
+		Add(ClassSocial, "社会科学").
+		Add(ClassNatural, "自然科学")
 }
 
 // Book

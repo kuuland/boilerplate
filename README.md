@@ -26,3 +26,11 @@
 1. 新建中间件：放到`middlewares`文件夹下
 
 1. 注册中间件：定义完成后，记得在`main.go`中进行注册
+
+## 如何处理密码字段（必读）
+
+1. 设值时需要进行MD5全小写处理`m.Password = kuu.MD5(明文)`
+1. **前端**请求时密码统一传入**MD5加密后的全小写字符串**
+1. 然后再通过钩子`BeforeSave`统一处理`kuu.GenerateFromPassword(m.Password)`
+1. 在模型字段上配置`kuu:"password"`屏蔽默认查询接口的字段返回
+1. 自定义登录接口中通过`kuu.CompareHashAndPassword(数据库密文, 32位全小写MD5码)`进行密码比对
