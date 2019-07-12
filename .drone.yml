@@ -12,6 +12,7 @@ steps:
       GOARCH: amd64
       GO111MODULE: on
       CGO_ENABLED: 0
+      GOPROXY: https://goproxy.io
     commands:
       - go build -v -o app
 
@@ -44,6 +45,3 @@ steps:
             "image": "registry.cn-hangzhou.aliyuncs.com/dexdev/kuu-boilerplate:${DRONE_COMMIT_BRANCH}-${DRONE_BUILD_NUMBER}"
           }
         ]
-
-node:
-  agent: hk
