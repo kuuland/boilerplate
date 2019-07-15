@@ -20,15 +20,12 @@ func Signup() kuu.RouteInfo {
 				c.STDErr("解析请求体失败，请按照Member格式提交参数", err)
 				return
 			}
-			err := c.WithTransaction(func(tx *gorm.DB) (err error) {
+			err := c.WithTransaction(func(tx *gorm.DB) (*gorm.DB, error) {
 				// 创建会员档案
 				// emberDoc.Password = kuu.MD5(models.GenerateRandomPass())
-				err = tx.Create(&memberDoc).Error
-				if err != nil {
-					return
-				}
-				if memberDoc.ID == 0 {
-					return errors.New("创建会员失败")
+				tx = tx.Create(&memberDoc)
+				if tx.NewRecord(memberDoc) {
+					return tx, errors.New("创建会员失败")
 				}
 				// 创建并绑定预置用户档案
 				memberUser := kuu.User{
@@ -38,15 +35,12 @@ func Signup() kuu.RouteInfo {
 					Mobile:   memberDoc.Mobile,
 					Email:    memberDoc.Email,
 				}
-				err = tx.Create(&memberUser).Error
-				if err != nil {
-					return
+				tx = tx.Create(&memberUser)
+				if tx.NewRecord(memberUser) {
+					return tx, errors.New("创建会员帐号失败")
 				}
-				if memberUser.ID == 0 {
-					return errors.New("创建会员帐号失败")
-				}
-				tx.Model(&memberDoc).Where("id = ? ", memberDoc.ID).Update("uid", memberUser.ID)
-				return tx.Error
+				tx = tx.Model(&memberDoc).Where("id = ? ", memberDoc.ID).Update("uid", memberUser.ID)
+				return tx, tx.Error
 			})
 			if err != nil {
 				c.STDErr("注册失败", err)

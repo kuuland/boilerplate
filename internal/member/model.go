@@ -1,6 +1,9 @@
 package member
 
-import "github.com/kuuland/kuu"
+import (
+	"github.com/jinzhu/gorm"
+	"github.com/kuuland/kuu"
+)
 
 // Member
 type Member struct {
@@ -12,9 +15,12 @@ type Member struct {
 }
 
 // BeforeSave
-func (m *Member) BeforeSave() {
+func (m *Member) BeforeSave(scope *gorm.Scope) (err error) {
 	if len(m.Password) == 32 {
-		m.Password = kuu.GenerateFromPassword(m.Password)
+		var hashed string
+		if hashed, err = kuu.GenerateFromPassword(m.Password); err == nil {
+			err = scope.SetColumn("Password", hashed)
+		}
 	}
 	return
 }
