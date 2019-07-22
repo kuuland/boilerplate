@@ -73,9 +73,9 @@ func Login() kuu.RouteInfo {
 						"MemberID":  member.ID,
 						"CreatedAt": member.CreatedAt,
 					},
-					UID:        member.UID,
-					SubDocID:   member.ID,
-					Expiration: time.Second * time.Duration(kuu.ExpiresSeconds),
+					UID:      member.UID,
+					SubDocID: member.ID,
+					Exp:      time.Now().Add(time.Second * time.Duration(kuu.ExpiresSeconds)).Unix(),
 				})
 				if err != nil {
 					c.STDErr("登录失败: 无法生成token")
