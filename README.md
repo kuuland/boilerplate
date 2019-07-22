@@ -1,5 +1,7 @@
 # boilerplate
 
+[![Build Status](https://travis-ci.org/kuuland/boilerplate.svg?branch=master)](https://travis-ci.org/kuuland/boilerplate)
+
 ## 初始化
 
 首次启动时，可开启`kuu.json`中的`gorm:migrate`标记自动建表：
