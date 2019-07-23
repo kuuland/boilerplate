@@ -16,16 +16,16 @@ func Signup() kuu.RouteInfo {
 		Method: "POST",
 		HandlerFunc: func(c *kuu.Context) {
 			var memberDoc Member
+			failedMessage := c.L("member_signup_failed", "Member signup failed")
 			if err := c.ShouldBindJSON(&memberDoc); err != nil {
-				c.STDErr("解析请求体失败，请按照Member格式提交参数", err)
+				c.STDErr(failedMessage, err)
 				return
 			}
 			err := c.WithTransaction(func(tx *gorm.DB) error {
 				// 创建会员档案
 				// emberDoc.Password = kuu.MD5(models.GenerateRandomPass())
-				tx.Create(&memberDoc)
-				if tx.NewRecord(memberDoc) {
-					return errors.New("创建会员失败")
+				if err := tx.Create(&memberDoc).Error; err != nil {
+					return err
 				}
 				// 创建并绑定预置用户档案
 				memberUser := kuu.User{
@@ -35,15 +35,15 @@ func Signup() kuu.RouteInfo {
 					Mobile:   memberDoc.Mobile,
 					Email:    memberDoc.Email,
 				}
-				tx.Create(&memberUser)
-				if tx.NewRecord(memberUser) {
-					return errors.New("创建会员帐号失败")
+
+				if err := tx.Create(&memberUser).Error; err != nil {
+					return err
 				}
 				tx.Model(&memberDoc).Where("id = ? ", memberDoc.ID).Update("uid", memberUser.ID)
 				return tx.Error
 			})
 			if err != nil {
-				c.STDErr("注册失败", err)
+				c.STDErr(failedMessage, err)
 			} else {
 				c.STD(memberDoc)
 			}
@@ -61,8 +61,9 @@ func Login() kuu.RouteInfo {
 				User string
 				Pass string
 			}
+			failedMessage := c.L("member_login_failed", "Member login failed")
 			if err := c.ShouldBindJSON(&login); err != nil {
-				c.STDErr("解析请求体失败，请按照Login格式提交参数", err)
+				c.STDErr(failedMessage, err)
 				return
 			}
 			var member Member
@@ -78,13 +79,12 @@ func Login() kuu.RouteInfo {
 					Exp:      time.Now().Add(time.Second * time.Duration(kuu.ExpiresSeconds)).Unix(),
 				})
 				if err != nil {
-					c.STDErr("登录失败: 无法生成token")
+					c.STDErr(failedMessage, err)
 					return
 				}
 				c.STD(secret.Token)
-				return
 			} else {
-				c.STD("登陆失败用户名或者密码错误!")
+				c.STDErr(failedMessage, errors.New("inconsistent password"))
 			}
 		},
 	}

@@ -16,13 +16,14 @@ func Private() kuu.RouteInfo {
 				Subject string `json:"Name" binding:"required"`
 				InStock bool
 			}
+			failedMessage := c.L("book_private_failed", "Querying books failed")
 			if err := c.ShouldBindBodyWith(&body, binding.JSON); err != nil {
-				c.STDErr("解析请求体失败", err)
+				c.STDErr(failedMessage, err)
 				return
 			}
 			var books []Book
 			if err := c.DB().Find(&books).Error; err != nil {
-				c.STDErr("查询失败", err)
+				c.STDErr(failedMessage, err)
 				return
 			}
 			c.STD(books)
@@ -38,8 +39,10 @@ func Public() kuu.RouteInfo {
 		HandlerFunc: func(c *kuu.Context) {
 			var books []Book
 			class, _ := strconv.Atoi(c.DefaultQuery("c", "100"))
+
+			failedMessage := c.L("book_public_failed", "Querying books failed")
 			if err := c.DB().Where(Book{InStock: true, Class: class}).Find(&books).Error; err != nil {
-				c.STDErr("查询失败", err)
+				c.STDErr(failedMessage, err)
 				return
 			}
 			c.STD(books)
