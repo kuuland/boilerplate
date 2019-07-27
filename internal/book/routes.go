@@ -12,17 +12,21 @@ func Private() kuu.RouteInfo {
 		Path:   "/book/private",
 		Method: "POST",
 		HandlerFunc: func(c *kuu.Context) {
-			var body struct {
-				Subject string `json:"Name" binding:"required"`
-				InStock bool
-			}
-			failedMessage := c.L("book_private_failed", "Querying books failed")
+			var (
+				body struct {
+					Subject string `json:"Name" binding:"required"`
+					InStock bool
+				}
+				books         []Book
+				failedMessage = c.L("book_private_failed", "Querying books failed")
+			)
+
 			if err := c.ShouldBindBodyWith(&body, binding.JSON); err != nil {
 				c.STDErr(failedMessage, err)
 				return
 			}
-			var books []Book
-			if err := c.DB().Find(&books).Error; err != nil {
+
+			if err := c.DB().Where(body).Find(&books).Error; err != nil {
 				c.STDErr(failedMessage, err)
 				return
 			}
@@ -37,10 +41,12 @@ func Public() kuu.RouteInfo {
 		Path:   "/book/public",
 		Method: "GET",
 		HandlerFunc: func(c *kuu.Context) {
-			var books []Book
-			class, _ := strconv.Atoi(c.DefaultQuery("c", "100"))
+			var (
+				books         []Book
+				class, _      = strconv.Atoi(c.DefaultQuery("c", "100"))
+				failedMessage = c.L("book_public_failed", "Querying books failed")
+			)
 
-			failedMessage := c.L("book_public_failed", "Querying books failed")
 			if err := c.DB().Where(Book{InStock: true, Class: class}).Find(&books).Error; err != nil {
 				c.STDErr(failedMessage, err)
 				return
