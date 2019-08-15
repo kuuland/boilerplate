@@ -130,6 +130,8 @@ github.com/kuuland/kuu v0.0.0-20190730162930-e77ccd01e9b1/go.mod h1:IxshdzjKF5s4
 github.com/kuuland/kuu v0.0.0-20190801065607-458dadd5162f/go.mod h1:IxshdzjKF5s45EmglHayR53pvbh7CwZGWSdfLZFDWdQ=
 github.com/kuuland/kuu v0.0.0-20190807104518-d6610be2f9b9 h1:58Q7xp+NxXw8D0Be/WJRXkaFOZqVswBHIj+smeH7lPE=
 github.com/kuuland/kuu v0.0.0-20190807104518-d6610be2f9b9/go.mod h1:3SKuMZrs3fzpYyMs6LEZVZKrkVEp++REtz03Ts8emm8=
+github.com/kuuland/kuu v0.0.0-20190815065557-73a3d77d0599 h1:OG6RghuZL8aBsVT0xlbwPo7xKU27eLaxNKQ00RBpeGQ=
+github.com/kuuland/kuu v0.0.0-20190815065557-73a3d77d0599/go.mod h1:3SKuMZrs3fzpYyMs6LEZVZKrkVEp++REtz03Ts8emm8=
 github.com/lib/pq v1.1.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
 github.com/lib/pq v1.1.1 h1:sJZmqHoEaY7f+NPP8pgLB/WxulyR3fewgCM2qaSlBb4=
 github.com/lib/pq v1.1.1/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=

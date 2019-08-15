@@ -1,7 +1,6 @@
 package member
 
 import (
-	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/jinzhu/gorm"
 	"github.com/kuuland/kuu"
@@ -68,7 +67,10 @@ func Login() kuu.RouteInfo {
 			}
 			var member Member
 			kuu.DB().Where("mobile = ? or email = ?", login.User, login.User).Find(&member)
-			if kuu.CompareHashAndPassword(member.Password, login.Pass) {
+			if err := kuu.CompareHashAndPassword(member.Password, login.Pass); err != nil {
+				c.STDErr(failedMessage, err)
+				return
+			} else {
 				secret, err := kuu.GenToken(kuu.GenTokenDesc{
 					Payload: jwt.MapClaims{
 						"MemberID":  member.ID,
@@ -77,14 +79,13 @@ func Login() kuu.RouteInfo {
 					UID:      member.UID,
 					SubDocID: member.ID,
 					Exp:      time.Now().Add(time.Second * time.Duration(kuu.ExpiresSeconds)).Unix(),
+					Type:     "MY_SIGN_TYPE",
 				})
 				if err != nil {
 					c.STDErr(failedMessage, err)
 					return
 				}
 				c.STD(secret.Token)
-			} else {
-				c.STDErr(failedMessage, errors.New("inconsistent password"))
 			}
 		},
 	}
