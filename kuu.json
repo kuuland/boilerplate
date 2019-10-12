@@ -28,7 +28,7 @@
   "gorm:migrate": false,
   "db": {
     "dialect": "postgres",
-    "args": "host=127.0.0.1 port=5432 user=root dbname=kuu password=kuu sslmode=disable timezone='Asia/Shanghai'"
+    "args": "host=121.41.46.25 port=5432 user=root dbname=kuu password=dexdev@2019 sslmode=disable timezone='Asia/Shanghai'"
   },
   "redis": {
     "addr": "127.0.0.1:6379"

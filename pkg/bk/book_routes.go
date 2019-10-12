@@ -1,4 +1,4 @@
-package book
+package bk
 
 import (
 	"github.com/gin-gonic/gin/binding"
@@ -9,6 +9,7 @@ import (
 // Private
 func Private() kuu.RouteInfo {
 	return kuu.RouteInfo{
+		Name:   "查询私有图书",
 		Path:   "/book/private",
 		Method: "POST",
 		HandlerFunc: func(c *kuu.Context) {
@@ -38,6 +39,7 @@ func Private() kuu.RouteInfo {
 // Public
 func Public() kuu.RouteInfo {
 	return kuu.RouteInfo{
+		Name:   "查询公共图书",
 		Path:   "/book/public",
 		Method: "GET",
 		HandlerFunc: func(c *kuu.Context) {

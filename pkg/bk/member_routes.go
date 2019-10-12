@@ -1,4 +1,4 @@
-package member
+package bk
 
 import (
 	"github.com/dgrijalva/jwt-go"
@@ -11,6 +11,7 @@ import (
 // Signup
 func Signup() kuu.RouteInfo {
 	return kuu.RouteInfo{
+		Name:   "会员注册接口",
 		Path:   "/member/signup",
 		Method: "POST",
 		HandlerFunc: func(c *kuu.Context) {
@@ -53,6 +54,7 @@ func Signup() kuu.RouteInfo {
 // Login
 func Login() kuu.RouteInfo {
 	return kuu.RouteInfo{
+		Name:   "会员登录接口",
 		Path:   "/member/login",
 		Method: "POST",
 		HandlerFunc: func(c *kuu.Context) {

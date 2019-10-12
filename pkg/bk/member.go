@@ -1,4 +1,4 @@
-package member
+package bk
 
 import (
 	"github.com/jinzhu/gorm"

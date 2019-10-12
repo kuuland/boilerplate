@@ -1,11 +1,10 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/kuuland/boilerplate/internal/book"
-	"github.com/kuuland/boilerplate/internal/member"
 	"github.com/kuuland/boilerplate/middlewares"
+	"github.com/kuuland/boilerplate/pkg/as"
+	"github.com/kuuland/boilerplate/pkg/bk"
 	"github.com/kuuland/kuu"
 	"regexp"
 )
@@ -16,22 +15,11 @@ func main() {
 		"GET /book/public",
 		"POST /member/login",
 		regexp.MustCompile(`book$`),
+		regexp.MustCompile(`bank`),
+		regexp.MustCompile(`customer$`),
+		regexp.MustCompile(`idcard$`),
 	)
-	r.Import(kuu.Acc(), kuu.Sys(), &kuu.Mod{
-		Code: "foo",
-		Models: []interface{}{
-			&book.Book{},
-			&member.Member{},
-		},
-		Middlewares: gin.HandlersChain{
-			middlewares.HelloMiddleware,
-		},
-		Routes: kuu.RoutesInfo{
-			book.Private(),
-			book.Public(),
-			member.Signup(),
-			member.Login(),
-		},
-	})
+	r.Use(middlewares.HelloMiddleware)
+	r.Import(kuu.Acc(), kuu.Sys(), as.Mod(), bk.Mod())
 	r.Run()
 }

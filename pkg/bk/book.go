@@ -1,4 +1,4 @@
-package book
+package bk
 
 import (
 	"github.com/kuuland/kuu"
