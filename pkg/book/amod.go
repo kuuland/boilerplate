@@ -1,10 +1,11 @@
-package bk
+package book
 
 import "github.com/kuuland/kuu"
 
+// Mod
 func Mod() *kuu.Mod {
 	return &kuu.Mod{
-		Code: "bk",
+		Code: "book",
 		Models: []interface{}{
 			&Book{},
 			&Member{},

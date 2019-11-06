@@ -1,12 +1,13 @@
-package as
+package bank
 
 import (
 	"github.com/kuuland/kuu"
 )
 
+// Mod
 func Mod() *kuu.Mod {
 	return &kuu.Mod{
-		Code: "as",
+		Code: "bank",
 		Models: []interface{}{
 			&Bank{},
 			&BankCard{},

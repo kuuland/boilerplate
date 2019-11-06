@@ -1,4 +1,4 @@
-package bk
+package book
 
 import (
 	"github.com/gin-gonic/gin/binding"

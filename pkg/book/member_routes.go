@@ -1,4 +1,4 @@
-package bk
+package book
 
 import (
 	"github.com/dgrijalva/jwt-go"

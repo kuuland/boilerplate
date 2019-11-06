@@ -31,10 +31,13 @@
     "args": "host=127.0.0.1 port=5432 user=root dbname=kuu password=kuu sslmode=disable timezone='Asia/Shanghai'"
   },
   "redis": {
-    "addr": "127.0.0.1:6379"
+    "addrs": [
+      "127.0.0.1:6379"
+    ],
+    "password": "abc123"
   },
   "statics": {
     "/assets": "assets/",
-    "/docs": "docs/"
+    "/docs": "api/"
   }
 }
