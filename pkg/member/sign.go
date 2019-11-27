@@ -1,8 +1,9 @@
-package book
+package member
 
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/jinzhu/gorm"
+	"github.com/kuuland/boilerplate/core"
 	"github.com/kuuland/kuu"
 	uuid "github.com/satori/go.uuid"
 	"time"
@@ -15,7 +16,7 @@ func Signup() kuu.RouteInfo {
 		Path:   "/member/signup",
 		Method: "POST",
 		HandlerFunc: func(c *kuu.Context) {
-			var memberDoc Member
+			var memberDoc core.Member
 			failedMessage := c.L("member_signup_failed", "Member signup failed")
 			if err := c.ShouldBindJSON(&memberDoc); err != nil {
 				c.STDErr(failedMessage, err)
@@ -67,7 +68,7 @@ func Login() kuu.RouteInfo {
 				c.STDErr(failedMessage, err)
 				return
 			}
-			var member Member
+			var member core.Member
 			kuu.DB().Where("mobile = ? or email = ?", login.User, login.User).Find(&member)
 			if err := kuu.CompareHashAndPassword(member.Password, login.Pass); err != nil {
 				c.STDErr(failedMessage, err)

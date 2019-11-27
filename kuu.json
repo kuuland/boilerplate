@@ -25,16 +25,16 @@
     "MaxAge": 43200000000000
   },
   "gzip": true,
-  "gorm:migrate": false,
+  "gorm:migrate": true,
   "db": {
     "dialect": "postgres",
-    "args": "host=127.0.0.1 port=5432 user=root dbname=kuu password=kuu sslmode=disable timezone='Asia/Shanghai'"
+    "args": "host=121.41.46.25 port=5432 user=root dbname=kuu password=dexdev@2019 sslmode=disable timezone='Asia/Shanghai'"
   },
   "redis": {
     "addrs": [
-      "127.0.0.1:6379"
+      "www.wosoft.me:6412"
     ],
-    "password": "abc123"
+    "password": "F7B73743E7AEDD58E58900F4782550BF"
   },
   "statics": {
     "/assets": "assets/",

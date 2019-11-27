@@ -3,8 +3,7 @@ package main
 import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/kuuland/boilerplate/middlewares"
-	"github.com/kuuland/boilerplate/pkg/bank"
-	"github.com/kuuland/boilerplate/pkg/book"
+	"github.com/kuuland/boilerplate/pkg"
 	"github.com/kuuland/kuu"
 	"regexp"
 )
@@ -20,6 +19,6 @@ func main() {
 		regexp.MustCompile(`idcard$`),
 	)
 	r.Use(middlewares.HelloMiddleware)
-	r.Import(kuu.Acc(), kuu.Sys(), bank.Mod(), book.Mod())
+	r.Import(kuu.Acc(), kuu.Sys(), pkg.All())
 	r.Run()
 }

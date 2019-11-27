@@ -1,4 +1,4 @@
-package bank
+package core
 
 import (
 	"github.com/kuuland/kuu"

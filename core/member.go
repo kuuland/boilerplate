@@ -1,4 +1,4 @@
-package book
+package core
 
 import (
 	"github.com/jinzhu/gorm"

@@ -1,32 +1,60 @@
 package book
 
 import (
+	"github.com/gin-gonic/gin/binding"
+	"github.com/kuuland/boilerplate/core"
 	"github.com/kuuland/kuu"
-	"time"
+	"strconv"
 )
 
-// 枚举：图书分类
-const (
-	_               = iota
-	ClassPhilosophy = 100 * iota // 100的倍数
-	ClassSocial
-	ClassNatural
-)
+// Private
+func Private() kuu.RouteInfo {
+	return kuu.RouteInfo{
+		Name:   "查询私有图书",
+		Path:   "/book/private",
+		Method: "POST",
+		HandlerFunc: func(c *kuu.Context) {
+			var (
+				body struct {
+					Subject string `json:"Name" binding:"required"`
+					InStock bool
+				}
+				books         []core.Book
+				failedMessage = c.L("book_private_failed", "Querying books failed")
+			)
 
-func init() {
-	kuu.Enum("BookClass", "图书分类").
-		Add(ClassPhilosophy, "哲学").
-		Add(ClassSocial, "社会科学").
-		Add(ClassNatural, "自然科学")
+			if err := c.ShouldBindBodyWith(&body, binding.JSON); err != nil {
+				c.STDErr(failedMessage, err)
+				return
+			}
+
+			if err := c.DB().Where(body).Find(&books).Error; err != nil {
+				c.STDErr(failedMessage, err)
+				return
+			}
+			c.STD(books)
+		},
+	}
 }
 
-// Book
-type Book struct {
-	kuu.Model `rest:"*" displayName:"图书信息"`
-	Subject   string     `name:"书名"`
-	Intro     string     `name:"简介"`
-	Class     int        `name:"分类" enum:"BookClass"`
-	Price     float32    `name:"价格"`
-	InStock   bool       `name:"是否有货"`
-	PubDate   *time.Time `name:"出版日期"`
+// Public
+func Public() kuu.RouteInfo {
+	return kuu.RouteInfo{
+		Name:   "查询公共图书",
+		Path:   "/book/public",
+		Method: "GET",
+		HandlerFunc: func(c *kuu.Context) {
+			var (
+				books         []core.Book
+				class, _      = strconv.Atoi(c.DefaultQuery("c", "100"))
+				failedMessage = c.L("book_public_failed", "Querying books failed")
+			)
+
+			if err := c.DB().Where(core.Book{InStock: true, Class: class}).Find(&books).Error; err != nil {
+				c.STDErr(failedMessage, err)
+				return
+			}
+			c.STD(books)
+		},
+	}
 }
