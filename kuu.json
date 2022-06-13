@@ -32,7 +32,7 @@
   },
   "redis": {
     "addrs": [
-      "www.wosoft.me:6412"
+      "w121.41.46.25:6412"
     ],
     "password": "F7B73743E7AEDD58E58900F4782550BF"
   },
